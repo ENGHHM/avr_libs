@@ -1,0 +1,453 @@
+
+7segtest.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000230  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  00000284  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000284  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002b4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000058  00000000  00000000  000002f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000a47  00000000  00000000  00000348  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000679  00000000  00000000  00000d8f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000055c  00000000  00000000  00001408  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000078  00000000  00000000  00001964  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000037a  00000000  00000000  000019dc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000288  00000000  00000000  00001d56  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000038  00000000  00000000  00001fde  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 36 00 	call	0x6c	; 0x6c <main>
+  64:	0c 94 16 01 	jmp	0x22c	; 0x22c <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <main>:
+ #include "avr/delay.h"
+
+int main(void)
+{
+    /* Replace with your application code */
+	init();
+  6c:	0e 94 bf 00 	call	0x17e	; 0x17e <init>
+	
+    while (1) 
+    { 
+	    start_test_screen(); //// start screen test
+  70:	0e 94 c4 00 	call	0x188	; 0x188 <start_test_screen>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  74:	2f ef       	ldi	r18, 0xFF	; 255
+  76:	81 ee       	ldi	r24, 0xE1	; 225
+  78:	94 e0       	ldi	r25, 0x04	; 4
+  7a:	21 50       	subi	r18, 0x01	; 1
+  7c:	80 40       	sbci	r24, 0x00	; 0
+  7e:	90 40       	sbci	r25, 0x00	; 0
+  80:	e1 f7       	brne	.-8      	; 0x7a <main+0xe>
+  82:	00 c0       	rjmp	.+0      	; 0x84 <main+0x18>
+  84:	00 00       	nop
+	    _delay_ms(200);  /// wait for 200 ms
+		end_test_screen(); /// end test
+  86:	0e 94 c6 00 	call	0x18c	; 0x18c <end_test_screen>
+
+			send_number(0); //// send number 0
+  8a:	80 e0       	ldi	r24, 0x00	; 0
+  8c:	90 e0       	ldi	r25, 0x00	; 0
+  8e:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+			
+		send_number(1); // send number 1
+  92:	81 e0       	ldi	r24, 0x01	; 1
+  94:	90 e0       	ldi	r25, 0x00	; 0
+  96:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+  9a:	2f ef       	ldi	r18, 0xFF	; 255
+  9c:	81 ee       	ldi	r24, 0xE1	; 225
+  9e:	94 e0       	ldi	r25, 0x04	; 4
+  a0:	21 50       	subi	r18, 0x01	; 1
+  a2:	80 40       	sbci	r24, 0x00	; 0
+  a4:	90 40       	sbci	r25, 0x00	; 0
+  a6:	e1 f7       	brne	.-8      	; 0xa0 <main+0x34>
+  a8:	00 c0       	rjmp	.+0      	; 0xaa <main+0x3e>
+  aa:	00 00       	nop
+		_delay_ms(200); /// wait for 2 sec
+		send_number(2); /// send num 2
+  ac:	82 e0       	ldi	r24, 0x02	; 2
+  ae:	90 e0       	ldi	r25, 0x00	; 0
+  b0:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+  b4:	2f ef       	ldi	r18, 0xFF	; 255
+  b6:	81 ee       	ldi	r24, 0xE1	; 225
+  b8:	94 e0       	ldi	r25, 0x04	; 4
+  ba:	21 50       	subi	r18, 0x01	; 1
+  bc:	80 40       	sbci	r24, 0x00	; 0
+  be:	90 40       	sbci	r25, 0x00	; 0
+  c0:	e1 f7       	brne	.-8      	; 0xba <main+0x4e>
+  c2:	00 c0       	rjmp	.+0      	; 0xc4 <main+0x58>
+  c4:	00 00       	nop
+		_delay_ms(200);
+		send_number(3);
+  c6:	83 e0       	ldi	r24, 0x03	; 3
+  c8:	90 e0       	ldi	r25, 0x00	; 0
+  ca:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+  ce:	2f ef       	ldi	r18, 0xFF	; 255
+  d0:	81 ee       	ldi	r24, 0xE1	; 225
+  d2:	94 e0       	ldi	r25, 0x04	; 4
+  d4:	21 50       	subi	r18, 0x01	; 1
+  d6:	80 40       	sbci	r24, 0x00	; 0
+  d8:	90 40       	sbci	r25, 0x00	; 0
+  da:	e1 f7       	brne	.-8      	; 0xd4 <main+0x68>
+  dc:	00 c0       	rjmp	.+0      	; 0xde <main+0x72>
+  de:	00 00       	nop
+		_delay_ms(200);
+		send_number(4);
+  e0:	84 e0       	ldi	r24, 0x04	; 4
+  e2:	90 e0       	ldi	r25, 0x00	; 0
+  e4:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+  e8:	2f ef       	ldi	r18, 0xFF	; 255
+  ea:	81 ee       	ldi	r24, 0xE1	; 225
+  ec:	94 e0       	ldi	r25, 0x04	; 4
+  ee:	21 50       	subi	r18, 0x01	; 1
+  f0:	80 40       	sbci	r24, 0x00	; 0
+  f2:	90 40       	sbci	r25, 0x00	; 0
+  f4:	e1 f7       	brne	.-8      	; 0xee <main+0x82>
+  f6:	00 c0       	rjmp	.+0      	; 0xf8 <main+0x8c>
+  f8:	00 00       	nop
+		_delay_ms(200);
+		send_number(5);
+  fa:	85 e0       	ldi	r24, 0x05	; 5
+  fc:	90 e0       	ldi	r25, 0x00	; 0
+  fe:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+ 102:	2f ef       	ldi	r18, 0xFF	; 255
+ 104:	81 ee       	ldi	r24, 0xE1	; 225
+ 106:	94 e0       	ldi	r25, 0x04	; 4
+ 108:	21 50       	subi	r18, 0x01	; 1
+ 10a:	80 40       	sbci	r24, 0x00	; 0
+ 10c:	90 40       	sbci	r25, 0x00	; 0
+ 10e:	e1 f7       	brne	.-8      	; 0x108 <main+0x9c>
+ 110:	00 c0       	rjmp	.+0      	; 0x112 <main+0xa6>
+ 112:	00 00       	nop
+		_delay_ms(200);
+			send_number(6);
+ 114:	86 e0       	ldi	r24, 0x06	; 6
+ 116:	90 e0       	ldi	r25, 0x00	; 0
+ 118:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+ 11c:	2f ef       	ldi	r18, 0xFF	; 255
+ 11e:	81 ee       	ldi	r24, 0xE1	; 225
+ 120:	94 e0       	ldi	r25, 0x04	; 4
+ 122:	21 50       	subi	r18, 0x01	; 1
+ 124:	80 40       	sbci	r24, 0x00	; 0
+ 126:	90 40       	sbci	r25, 0x00	; 0
+ 128:	e1 f7       	brne	.-8      	; 0x122 <main+0xb6>
+ 12a:	00 c0       	rjmp	.+0      	; 0x12c <main+0xc0>
+ 12c:	00 00       	nop
+			_delay_ms(200);
+				send_number(7);
+ 12e:	87 e0       	ldi	r24, 0x07	; 7
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+ 136:	2f ef       	ldi	r18, 0xFF	; 255
+ 138:	81 ee       	ldi	r24, 0xE1	; 225
+ 13a:	94 e0       	ldi	r25, 0x04	; 4
+ 13c:	21 50       	subi	r18, 0x01	; 1
+ 13e:	80 40       	sbci	r24, 0x00	; 0
+ 140:	90 40       	sbci	r25, 0x00	; 0
+ 142:	e1 f7       	brne	.-8      	; 0x13c <main+0xd0>
+ 144:	00 c0       	rjmp	.+0      	; 0x146 <main+0xda>
+ 146:	00 00       	nop
+				_delay_ms(200);
+					send_number(8);
+ 148:	88 e0       	ldi	r24, 0x08	; 8
+ 14a:	90 e0       	ldi	r25, 0x00	; 0
+ 14c:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+ 150:	2f ef       	ldi	r18, 0xFF	; 255
+ 152:	81 ee       	ldi	r24, 0xE1	; 225
+ 154:	94 e0       	ldi	r25, 0x04	; 4
+ 156:	21 50       	subi	r18, 0x01	; 1
+ 158:	80 40       	sbci	r24, 0x00	; 0
+ 15a:	90 40       	sbci	r25, 0x00	; 0
+ 15c:	e1 f7       	brne	.-8      	; 0x156 <main+0xea>
+ 15e:	00 c0       	rjmp	.+0      	; 0x160 <main+0xf4>
+ 160:	00 00       	nop
+					_delay_ms(200);
+						send_number(9);
+ 162:	89 e0       	ldi	r24, 0x09	; 9
+ 164:	90 e0       	ldi	r25, 0x00	; 0
+ 166:	0e 94 c8 00 	call	0x190	; 0x190 <send_number>
+ 16a:	2f ef       	ldi	r18, 0xFF	; 255
+ 16c:	81 ee       	ldi	r24, 0xE1	; 225
+ 16e:	94 e0       	ldi	r25, 0x04	; 4
+ 170:	21 50       	subi	r18, 0x01	; 1
+ 172:	80 40       	sbci	r24, 0x00	; 0
+ 174:	90 40       	sbci	r25, 0x00	; 0
+ 176:	e1 f7       	brne	.-8      	; 0x170 <main+0x104>
+ 178:	00 c0       	rjmp	.+0      	; 0x17a <main+0x10e>
+ 17a:	00 00       	nop
+ 17c:	79 cf       	rjmp	.-270    	; 0x70 <main+0x4>
+
+0000017e <init>:
+
+   void init()/// function to set ports as Outputs  
+{
+	
+	  
+	  ppddr |= (1<<pp0); // set 1   (output)
+ 17e:	a0 9a       	sbi	0x14, 0	; 20
+	  ppddr|= (1<<pp1); // set 1  (output)
+ 180:	a1 9a       	sbi	0x14, 1	; 20
+	  ppddr |= (1<<pp2); // set 1   (output)
+ 182:	a2 9a       	sbi	0x14, 2	; 20
+	  ppddr |= (1<<pp3); // set 1   (output)
+ 184:	a3 9a       	sbi	0x14, 3	; 20
+ 186:	08 95       	ret
+
+00000188 <start_test_screen>:
+	} 
+	
+	 void start_test_screen() 
+	 {
+		 ppname |= (1<<pp4);
+ 188:	ac 9a       	sbi	0x15, 4	; 21
+ 18a:	08 95       	ret
+
+0000018c <end_test_screen>:
+ 	 }    /// function to turn on all leds that contined inside the screen
+	 
+	 void end_test_screen() /// function to turn off all leds that contined inside the screen
+	 {
+		 	 
+	 	 ppname &= ~ (1<<pp4);
+ 18c:	ac 98       	cbi	0x15, 4	; 21
+ 18e:	08 95       	ret
+
+00000190 <send_number>:
+	 } 
+	 
+ void send_number(int number)  /// function to Send  number to screen
+{
+		  
+	 if(number==0)
+ 190:	00 97       	sbiw	r24, 0x00	; 0
+ 192:	29 f4       	brne	.+10     	; 0x19e <send_number+0xe>
+	 {
+				ppname &= ~ (1<<pp0);
+ 194:	a8 98       	cbi	0x15, 0	; 21
+		     	ppname &= ~ (1<<pp1);
+ 196:	a9 98       	cbi	0x15, 1	; 21
+		     	ppname &= ~ (1<<pp2);
+ 198:	aa 98       	cbi	0x15, 2	; 21
+		     	ppname &= ~ (1<<pp3);
+ 19a:	ab 98       	cbi	0x15, 3	; 21
+ 19c:	10 c0       	rjmp	.+32     	; 0x1be <send_number+0x2e>
+
+
+
+	 }
+	 
+	 if(number==1)
+ 19e:	81 30       	cpi	r24, 0x01	; 1
+ 1a0:	91 05       	cpc	r25, r1
+ 1a2:	29 f4       	brne	.+10     	; 0x1ae <send_number+0x1e>
+	 {
+		 
+			 		ppname |= (1<<pp0);
+ 1a4:	a8 9a       	sbi	0x15, 0	; 21
+                    	ppname &= ~ (1<<pp1);
+ 1a6:	a9 98       	cbi	0x15, 1	; 21
+                    	ppname &= ~ (1<<pp2);
+ 1a8:	aa 98       	cbi	0x15, 2	; 21
+                    	ppname &= ~ (1<<pp3);
+ 1aa:	ab 98       	cbi	0x15, 3	; 21
+ 1ac:	10 c0       	rjmp	.+32     	; 0x1ce <send_number+0x3e>
+	 }
+	 
+	 if(number==2)
+ 1ae:	82 30       	cpi	r24, 0x02	; 2
+ 1b0:	91 05       	cpc	r25, r1
+ 1b2:	29 f4       	brne	.+10     	; 0x1be <send_number+0x2e>
+	 {
+		 ppname |= (1<<pp1);
+ 1b4:	a9 9a       	sbi	0x15, 1	; 21
+		 ppname &= ~ (1<<pp0);
+ 1b6:	a8 98       	cbi	0x15, 0	; 21
+		 ppname &= ~ (1<<pp2);
+ 1b8:	aa 98       	cbi	0x15, 2	; 21
+		 ppname &= ~ (1<<pp3);
+ 1ba:	ab 98       	cbi	0x15, 3	; 21
+ 1bc:	10 c0       	rjmp	.+32     	; 0x1de <send_number+0x4e>
+	 }
+	 if(number==3)
+ 1be:	83 30       	cpi	r24, 0x03	; 3
+ 1c0:	91 05       	cpc	r25, r1
+ 1c2:	29 f4       	brne	.+10     	; 0x1ce <send_number+0x3e>
+	 {
+		 ppname |= (1<<pp0); /// ppname 2 
+ 1c4:	a8 9a       	sbi	0x15, 0	; 21
+     	 ppname |= (1<<pp1); // ppname1;
+ 1c6:	a9 9a       	sbi	0x15, 1	; 21
+
+ 		 ppname &= ~ (1<<pp2);
+ 1c8:	aa 98       	cbi	0x15, 2	; 21
+		 ppname &= ~ (1<<pp3);
+ 1ca:	ab 98       	cbi	0x15, 3	; 21
+ 1cc:	10 c0       	rjmp	.+32     	; 0x1ee <send_number+0x5e>
+	 }
+	 
+	 	 if(number==4)
+ 1ce:	84 30       	cpi	r24, 0x04	; 4
+ 1d0:	91 05       	cpc	r25, r1
+ 1d2:	29 f4       	brne	.+10     	; 0x1de <send_number+0x4e>
+	 	 {
+		 	 ppname |= (1<<pp2); /// 
+ 1d4:	aa 9a       	sbi	0x15, 2	; 21
+ 
+		 	 ppname &= ~ (1<<pp1);
+ 1d6:	a9 98       	cbi	0x15, 1	; 21
+		 	 ppname &= ~ (1<<pp3);
+ 1d8:	ab 98       	cbi	0x15, 3	; 21
+	    	 ppname &= ~ (1<<pp0);
+ 1da:	a8 98       	cbi	0x15, 0	; 21
+ 1dc:	10 c0       	rjmp	.+32     	; 0x1fe <send_number+0x6e>
+
+	 	 }
+		   if(number==5)
+ 1de:	85 30       	cpi	r24, 0x05	; 5
+ 1e0:	91 05       	cpc	r25, r1
+ 1e2:	29 f4       	brne	.+10     	; 0x1ee <send_number+0x5e>
+		   {
+			   ppname |= (1<<pp2); ///
+ 1e4:	aa 9a       	sbi	0x15, 2	; 21
+			   ppname |= (1<<pp0); ///
+ 1e6:	a8 9a       	sbi	0x15, 0	; 21
+
+			   ppname &= ~ (1<<pp1);
+ 1e8:	a9 98       	cbi	0x15, 1	; 21
+			   ppname &= ~ (1<<pp3);
+ 1ea:	ab 98       	cbi	0x15, 3	; 21
+ 1ec:	10 c0       	rjmp	.+32     	; 0x20e <send_number+0x7e>
+		   }
+		   
+		  
+   if(number==6)
+ 1ee:	86 30       	cpi	r24, 0x06	; 6
+ 1f0:	91 05       	cpc	r25, r1
+ 1f2:	29 f4       	brne	.+10     	; 0x1fe <send_number+0x6e>
+   {
+	   ppname |= (1<<pp2); ///
+ 1f4:	aa 9a       	sbi	0x15, 2	; 21
+	   ppname |= (1<<pp1); ///
+ 1f6:	a9 9a       	sbi	0x15, 1	; 21
+
+	   ppname &= ~ (1<<pp0);
+ 1f8:	a8 98       	cbi	0x15, 0	; 21
+	   ppname &= ~ (1<<pp3);
+ 1fa:	ab 98       	cbi	0x15, 3	; 21
+ 1fc:	10 c0       	rjmp	.+32     	; 0x21e <send_number+0x8e>
+   }
+   
+   
+      if(number==7)
+ 1fe:	87 30       	cpi	r24, 0x07	; 7
+ 200:	91 05       	cpc	r25, r1
+ 202:	29 f4       	brne	.+10     	; 0x20e <send_number+0x7e>
+      {
+	      ppname |= (1<<pp2); ///
+ 204:	aa 9a       	sbi	0x15, 2	; 21
+	      ppname |= (1<<pp0); ///
+ 206:	a8 9a       	sbi	0x15, 0	; 21
+	      ppname |= (1<<pp1); ///
+ 208:	a9 9a       	sbi	0x15, 1	; 21
+
+	      
+	      ppname &= ~ (1<<pp3);
+ 20a:	ab 98       	cbi	0x15, 3	; 21
+ 20c:	08 95       	ret
+      }
+	  
+	  
+	  if(number==8)
+ 20e:	88 30       	cpi	r24, 0x08	; 8
+ 210:	91 05       	cpc	r25, r1
+ 212:	29 f4       	brne	.+10     	; 0x21e <send_number+0x8e>
+	  {
+		  ppname |= (1<<pp3); ///
+ 214:	ab 9a       	sbi	0x15, 3	; 21
+		   
+
+		 ppname &= ~ (1<<pp0);
+ 216:	a8 98       	cbi	0x15, 0	; 21
+		 ppname &= ~ (1<<pp1);
+ 218:	a9 98       	cbi	0x15, 1	; 21
+		 ppname &= ~ (1<<pp2);
+ 21a:	aa 98       	cbi	0x15, 2	; 21
+ 21c:	08 95       	ret
+	  }
+	  
+	  
+	  	  if(number==9)
+ 21e:	09 97       	sbiw	r24, 0x09	; 9
+ 220:	21 f4       	brne	.+8      	; 0x22a <send_number+0x9a>
+	  	  {
+		  	  ppname |= (1<<pp3); ///
+ 222:	ab 9a       	sbi	0x15, 3	; 21
+	     	  ppname |= (1<<pp0); ///
+ 224:	a8 9a       	sbi	0x15, 0	; 21
+
+
+		  	 
+		  	  ppname &= ~ (1<<pp1);
+ 226:	a9 98       	cbi	0x15, 1	; 21
+		  	  ppname &= ~ (1<<pp2);
+ 228:	aa 98       	cbi	0x15, 2	; 21
+ 22a:	08 95       	ret
+
+0000022c <_exit>:
+ 22c:	f8 94       	cli
+
+0000022e <__stop_program>:
+ 22e:	ff cf       	rjmp	.-2      	; 0x22e <__stop_program>
